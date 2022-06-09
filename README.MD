@@ -1,7 +1,5 @@
 # JPA Project DIO TQI Bootcamp
 
----
-
 ### Sobre o Projeto:
 Esse projeto simula um simples sistema de banco, no terminal, o objetivo
  do mesmo é testar todo o aprendizado em Java orientado a objeto juntamente o Java Persistence API.
