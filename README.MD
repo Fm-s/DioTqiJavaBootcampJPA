@@ -8,7 +8,9 @@ Esse projeto simula um simples sistema de banco, no terminal, o objetivo
 
 Tentei aplicar todos os conhecimentos que adquiri até o presente momento
 de forma útil tentando simular ao máximo casos de uso reais.
+
 ---
+
 > ### 📝 Tecnologias Utilizadas
 >- IDE IntelliJ Community
 >- Gerenciador de Dependências Maven
