@@ -22,16 +22,12 @@ public abstract class Account  implements printerDetail {
     @Column
     private double balance;
 
-    @Enumerated(STRING)
-    private accountType accType;
-
     protected Account() {
     }
 
-    protected Account(User owner, double strBalance, accountType accType) {
+    protected Account(User owner, double strBalance) {
         this.owner = owner;
         this.balance = strBalance;
-        this.accType = accType;
     }
 
     public double getBalance(){
@@ -46,7 +42,7 @@ public abstract class Account  implements printerDetail {
 
     @Override
     public String toString() {
-        return "Numero: " + id + ", Cliente: " + owner.toString();
+        return "Conta: " + id + ", Cliente: " + owner.toString();
     }
 
 

@@ -46,13 +46,7 @@ public class UserDAO {
         this.userList = customQuery.getResultList();
         db.close();
         return this.userList;
-
-        //Referencia
-        //cr.select(root).where(cb.like(root.get("itemName"), "%chair%"));
     }
-
-
-
 
     public static User getUserById(int id) {
         DbAcess db = new DbAcess();

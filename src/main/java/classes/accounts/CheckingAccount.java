@@ -12,8 +12,8 @@ public class CheckingAccount extends Account {
 
     protected CheckingAccount() {}
 
-    public CheckingAccount(User user, double strBalance, accountType type) {
-        super(user, strBalance, type);
+    public CheckingAccount(User user, double strBalance) {
+        super(user, strBalance);
         if (strBalance < 500) {
             this.creditLimit = 500;
         } else if (strBalance < 2000) {
@@ -43,6 +43,6 @@ public class CheckingAccount extends Account {
 
     @Override
     public String[] toStringDetail() {
-        return new String[0];
+        return new String[]{"| Tipo Conta: Corrente |",super.toString(),"div"};
     }
 }

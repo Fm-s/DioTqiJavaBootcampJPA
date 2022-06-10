@@ -13,9 +13,11 @@ public class SavingsAccount extends Account {
     @Column
     double gains;
 
-    protected SavingsAccount(){}
-    public SavingsAccount(User owner, Double strBalance, accountType type) {
-        super(owner,strBalance, type);
+    protected SavingsAccount() {
+    }
+
+    public SavingsAccount(User owner, Double strBalance) {
+        super(owner, strBalance);
     }
 
     @Override
@@ -40,6 +42,7 @@ public class SavingsAccount extends Account {
 
     @Override
     public String[] toStringDetail() {
-        return new String[0];
+
+        return new String[] {"| Tipo Conta: Poupança |",super.toString(),"div"};
     }
 }

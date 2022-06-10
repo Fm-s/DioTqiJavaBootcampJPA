@@ -1,5 +1,7 @@
 package routines;
 
+import classes.common.printerDetail;
+
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -45,9 +47,9 @@ public class Utility {
     public static void printer(String str) {
         switch (str) {
             case "intro" -> {
-                System.out.println("|-_-_-_-_-_-_-_-_+_-_-_-_-_-_-_-_-_-_+_-_-_-_-_-_-_-_-_|");
+                System.out.println("|-_-_-_-_-_-_-_-_-_-_-_+_-_-_-_-_-_-_-_-_-_+_-_-_-_-_-_-_-_-_-_-_-_|");
                 System.out.println(fillString("| Bank Manager 2000 |", "-*", "|", "|"));
-                System.out.println("|-_-_-_-_-_-_-_-_+_-_-_-_-_-_-_-_-_-_+_-_-_-_-_-_-_-_-_|");
+                System.out.println("|-_-_-_-_-_-_-_-_-_-_-_+_-_-_-_-_-_-_-_-_-_+_-_-_-_-_-_-_-_-_-_-_-_|");
             }
             case "opt" -> {
                 System.out.println(STD_STR);
@@ -136,19 +138,21 @@ public class Utility {
         printer("INICIO DA LISTAGEM");
         printer("div");
         for (T item : list) {
-            //if(item instanceof printerDetail){
-            // for(String str :((printerDetail) item).toStringDetail()){
-            //   printer(str);
-            //  }
-            //}else {
-            printer(item.toString());
-            printer("div");
-            //}
+            if (item instanceof printerDetail) {
+                for (String str : ((printerDetail) item).toStringDetail()) {
+                    printer(str);
+                }
+            } else {
+                printer(item.toString());
+                printer("div");
+            }
         }
         printer();
     }
 
     public static void printer(String[] str) {
-
+        for (String item : str){
+            printer(item);
+        }
     }
 }

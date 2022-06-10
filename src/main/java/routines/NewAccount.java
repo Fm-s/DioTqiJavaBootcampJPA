@@ -15,9 +15,9 @@ public abstract class NewAccount {
         try {
             DbAcess db = new DbAcess();
             if (type == 1) {
-                db.add(new CheckingAccount(user, balance, accountType.CHECKING_ACCOUNT));
+                db.add(new CheckingAccount(user, balance));
             } else {
-                db.add(new SavingsAccount(user, balance, accountType.SAVINGS_ACCOUNT));
+                db.add(new SavingsAccount(user, balance));
             }
             printer();
             printer("Sucesso!");

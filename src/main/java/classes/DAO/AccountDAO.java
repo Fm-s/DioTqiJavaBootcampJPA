@@ -6,11 +6,13 @@ import classes.accounts.CheckingAccount;
 import classes.accounts.SavingsAccount;
 import classes.common.DbAcess;
 import classes.common.User;
+import classes.common.printerDetail;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
+import jakarta.persistence.metamodel.EntityType;
+import jakarta.persistence.metamodel.Metamodel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDAO {
@@ -19,7 +21,7 @@ public class AccountDAO {
         DbAcess db = new DbAcess();
         Account ret = null;
         if (id > 0) {
-            ret = db.mrg().find(Account.class, id);
+            ret = db.mrg().find(Account.class, (id));
             db.close();
         }
         return ret;
@@ -30,6 +32,11 @@ public class AccountDAO {
         Account ret = null;
         if (Integer.parseInt(id) > 0) {
             ret = db.mrg().find(Account.class, Integer.parseInt(id));
+            System.out.println("Entrou");
+            for (String item : ret.toStringDetail()) {
+                System.out.println(item);
+                System.out.println("foi");
+            }
             db.close();
         }
         return ret;
@@ -55,25 +62,51 @@ public class AccountDAO {
         return accountList;
     }
 
+    public List<Account> getAccountsListDetail() {
+        DbAcess db = new DbAcess();
+        CriteriaBuilder cb = db.mrg().getCriteriaBuilder();
+
+        CriteriaQuery<Account> cq1 = cb.createQuery(Account.class);
+        CriteriaQuery<Account> cq2 = cb.createQuery(Account.class);
+
+        Root<SavingsAccount> svAcc = cq1.from(SavingsAccount.class);
+        Root<CheckingAccount> ckAcc = cq2.from(CheckingAccount.class);
+
+        svAcc.fetch("id", JoinType.LEFT);
+        ckAcc.fetch("id", JoinType.LEFT);
+        cq1.select(svAcc);
+        cq2.select(ckAcc);
+
+        TypedQuery<Account> query1 = db.mrg().createQuery(cq1);
+        TypedQuery<Account> query2 = db.mrg().createQuery(cq2);
+
+        List<Account> tempList = query1.getResultList();
+        tempList.addAll(query2.getResultList());
+
+        db.close();
+
+        System.out.println(tempList);
+
+
+        return tempList;
+    }
+
     public List<Account> getAccountsByUserName(String str) {
         String columnName = "name";
         DbAcess db = new DbAcess();
-        //Criteria Builder from entity manager
         CriteriaBuilder cb = db.mrg().getCriteriaBuilder();
-        //Create Query Builder with User format
-        CriteriaQuery<Account> cq = cb.createQuery(Account.class);
-        //Get User Path
-        Root<Account> accountPath = cq.from(Account.class);
-        //Select User from Path where Like str recived
-        CriteriaQuery<Account> nameLike = cq.select(accountPath).where(cb.like(accountPath.get(columnName), "%" + str + "%"));
-        //Make the Query
-        TypedQuery<Account> customQuery = db.mrg().createQuery(nameLike);
-        this.accountList = customQuery.getResultList();
+        CriteriaQuery<User> cqUser = cb.createQuery(User.class);
+        Root<User> userRoot = cqUser.from(User.class);
+        CriteriaQuery<User> whereLike = cqUser.select(userRoot).where(cb.like(userRoot.get(columnName), "%" + str + "%"));
+        TypedQuery<User> customQuery = db.mrg().createQuery(whereLike);
+        List<User> users = customQuery.getResultList();
+        List<Account> accList = new ArrayList<>();
+        for (User usr : users) {
+            accList.addAll(usr.getAccounts());
+        }
         db.close();
-        return this.accountList;
-
-        //Referencia
-        //cr.select(root).where(cb.like(root.get("itemName"), "%chair%"));
+        this.accountList = accList;
+        return accList;
     }
 
     public static Account getAccountsByUserId(int id) {

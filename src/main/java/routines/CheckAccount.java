@@ -1,10 +1,12 @@
 package routines;
 
 import classes.accounts.Account;
+import classes.common.User;
 
 import java.util.Scanner;
 
 import static classes.DAO.AccountDAO.getAccountById;
+import static classes.DAO.UserDAO.getUserById;
 import static routines.Utility.*;
 import static routines.Utility.printer;
 
@@ -31,7 +33,7 @@ public abstract class CheckAccount {
                         printer();
                         printer("Consulta por CODIGO");
                         printer();
-                        printer("Digite o CODIGO do Conta ou 0 pra voltar:");
+                        printer("Digite o CODIGO da Conta ou 0 pra voltar:");
                         printer();
                         int codigo = safeIntInput(input);
                         if (codigo == 0) break;
@@ -39,8 +41,9 @@ public abstract class CheckAccount {
                             Account acc = getAccountById(codigo);
                             if (acc != null) {
                                 printer();
-                                printer("Conta Encontrato:");
-                                printer(acc.toString());
+                                printer("Conta Encontrada:");
+                                printer(getAccountById(codigo).toStringDetail());
+                                printer();
                                 printer();
                             } else {
                                 printer();
@@ -54,6 +57,35 @@ public abstract class CheckAccount {
                         }
                     }
                 }
+                case 2 -> {
+                    while (true) {
+                        printer();
+                        printer("Consulta por CODIGO do Cliente");
+                        printer();
+                        printer("Digite o CODIGO do Cliente ou 0 pra voltar:");
+                        printer();
+                        int codigo = safeIntInput(input);
+                        if (codigo == 0) break;
+                        if (codigo > 0) {
+                            User usr = getUserById(codigo);
+                            printer();
+                            if (usr != null) {
+                                printer("Contas Encontradas:");
+                                printer(usr.getAccounts());
+                                printer();
+                            } else {
+                                printer("Codigo não encontrado!");
+                                printer("Tente novamente . . .");
+                                printer();
+                            }
+                            if (!confirmPrompt(input, "Gostaria de Consultar outro Codigo?")) break;
+                        } else {
+                            printer("invalid");
+                        }
+                    }
+                }
+                case 3 -> ListAccounts.renderArg(input, "byName");
+                case 4 -> ListAccounts.render(input);
             }
         }
     }

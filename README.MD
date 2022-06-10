@@ -24,7 +24,7 @@ de forma útil tentando simular ao máximo casos de uso reais.
 ### Sobre Experiência do Projeto
 
 <ul>
-  <li>O mais difícil foi fazer o Hibernate rodar corretamente, umas 8 horas, direto! 😥</li>
+  <li>O mais difícil foi fazer o Hibernate rodar corretamente com o Jarkarta 😥</li>
   <ul>
     <li>Nesse quesito aprendi muito sobre os gerenciadores de dependências Maven e Gradle.</li>
   </ul>
@@ -49,7 +49,6 @@ de forma útil tentando simular ao máximo casos de uso reais.
 > <ul>
 >   <li>As rotina de:</li>
 >   <ul>
->     <li>Finalizar rotina de Status de Conta</li>
 >     <li>Depósitos</li>
 >     <li>Saques</li>
 >     <li>Transferência</li>
